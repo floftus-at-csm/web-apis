@@ -65,30 +65,29 @@ def get_title(id1, key):
 	return title
 
 def get_ids(resp):
-	# ================================================
-	# Getting the youtube IDs out of the API response
-	# ================================================
+    # ================================================
+    # Getting the youtube IDs out of the API response
+    
+    items = resp["items"]
 
-	items = resp["items"]
+    youtube_ids = []
+    for item in items:
+        yt_id = item["id"]
+        youtube_ids.append(yt_id['videoId'])
 
-	youtube_ids = []
-	for item in items:
-		yt_id = item["id"]
-		youtube_ids.append(yt_id['videoId'])
+    print(youtube_ids)
+    print("the first one is: ")
+    print(youtube_ids[0])
+    print(len(youtube_ids))
 
-	print(youtube_ids)
-	print("the first one is: ")
-	print(youtube_ids[0])
-	print(len(youtube_ids))
-
-	url_basic = "https://www.youtube.com/watch?v="
-	full_youtube_ids = []
-	val = 0
-	for x in youtube_ids:
-	    full_youtube_ids.append( url_basic + x )
+    url_basic = "https://www.youtube.com/watch?v="
+    full_youtube_ids = []
+    val = 0
+    for x in youtube_ids:
+        full_youtube_ids.append( url_basic + x )
         val=val+1
-	# print(full_youtube_ids)
-	return full_youtube_ids
+    # print(full_youtube_ids)
+    return full_youtube_ids
 
 def start_up_stream(ids, id_number):
 	# ================================================
@@ -102,27 +101,28 @@ def start_up_stream(ids, id_number):
 	os.system(command)
 
 
-# def start_up_stream_and_close_stream(ids):
-# 	# ================================================
-# 	# open video stream
-# 	# ================================================
+def start_up_stream_and_close_stream(ids):
+	# ================================================
+	# open video stream
+	# ================================================
 
-# 	command = 'streamlink -p "omxplayer --timeout 20" --player-fifo '
+	command = 'streamlink -p "omxplayer --timeout 20" --player-fifo '
 	
-# 	command = command + ids[id_val] + ' best' 
-# 	os.system(command)
+	command = command + ids[id_val] + ' best' 
+	os.system(command)
 
-
+def remove_unwanted(titles, )
 
 id_val = 0
 avoid_these = ["Meme", "meme", "MEME","Coffin","COFFIN", "Coffin", "Dance", "DANCE", "dance", "Cleanse", "CLEANSE", "cleanse", "Vibration", "VIBRATION", "vibration", "Sonic", "SONIC", "sonic", "Lightning", "LIGHTNING", "lightning", "McQueen","GTA", "gta", "Gta", "Minecraft", "MINECRAFT", "Memes", "MEMES", "memes", "Funny", "FUNNY", "funny", "Birds", "BIRDS", "birds", "TV", "tv", "Tv"]
 load_dotenv()
 DEVELOPER_KEY  = os.environ.get("GOOGLE_API_KEY") # Define the API Key. This should be in a hidden file
 
-api_response = call_api(DEVELOPER_KEY, )
-# print(api_response)
+api_response = call_api(DEVELOPER_KEY, "another walk", False, "relevance") #final term could be rating, title, video count, date
+print(api_response)
+
 the_ids = get_ids(api_response)
-# print("the ids are: ", the_ids)
+print("the ids are: ", the_ids)
 ids_size = len( the_ids)
 id_val = ids_size - 1
 print("the number of ids is: ", ids_size)
