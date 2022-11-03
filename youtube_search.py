@@ -111,7 +111,21 @@ def start_up_stream_and_close_stream(ids):
 	command = command + ids[id_val] + ' best' 
 	os.system(command)
 
-def remove_unwanted(titles, )
+def remove_unwanted(titles, ids, words_to_avaoid):
+    # ================================================
+    # removing unwanted titles
+    # ================================================
+    ids_size = len( the_ids)
+    id_val = ids_size - 1
+    for word in words_to_avaoid:
+        if word in titles:
+            # remove from list
+            print("we need to remove this!")
+            ids.remove(ids[id_val]) # check this
+            ids_size = len(ids)
+            print("the second id_size is: ", ids_size)
+            id_val = ids_size - 1
+    return ids, ids_size
 
 id_val = 0
 avoid_these = ["Meme", "meme", "MEME","Coffin","COFFIN", "Coffin", "Dance", "DANCE", "dance", "Cleanse", "CLEANSE", "cleanse", "Vibration", "VIBRATION", "vibration", "Sonic", "SONIC", "sonic", "Lightning", "LIGHTNING", "lightning", "McQueen","GTA", "gta", "Gta", "Minecraft", "MINECRAFT", "Memes", "MEMES", "memes", "Funny", "FUNNY", "funny", "Birds", "BIRDS", "birds", "TV", "tv", "Tv"]
@@ -123,65 +137,56 @@ print(api_response)
 
 the_ids = get_ids(api_response)
 print("the ids are: ", the_ids)
-ids_size = len( the_ids)
-id_val = ids_size - 1
+
 print("the number of ids is: ", ids_size)
 counter = 0
 current_title = get_title(the_ids[id_val])
 print("the current title is: ", current_title)
 
-# ================================================
-# removing unwanted titles
-# ================================================
-for word in avoid_these:
-	if word in current_title:
-		# remove from list
-		print("we need to remove this!")
-		the_ids.remove(the_ids[id_val]) # check this
-		ids_size = len(the_ids)
-		print("the second id_size is: ", ids_size)
-		id_val = ids_size - 1
+the_ids, id_size = remove_unwanted(current_title, the_ids, avoid_these)
 
-start_up_stream(the_ids, id_val)
-start = time.time()
-start_callapi = time.time()
+# download videos with youtube_dl
 
-# ================================================
-# main loop
-# ================================================
-while True:
-	# everything in here will loop until told not to
-	try:
-		# when some timer is up startup another subprocess called process 2 and then kill the process1
-		if(time.time()-start>12.5):
-			if(id_val<0):
-				id_val=ids_size
-			else:
-				id_val = id_val - 1
-			# add a check here for unwanted titles
-			start_up_stream(the_ids, id_val)
-			time.sleep(5)
-			start_up_stream(the_ids,id_val)
-			print("the youtube link is; ", the_ids[id_val])
-			print("starting up the stream")
-			start = time.time()
+# start_up_stream(the_ids, id_val)
+# start = time.time()
+# start_callapi = time.time()
 
-		if(time.time()-start_callapi>360):
-			# 360 is 6 minutes 6*60
-			# change this value to be how often you want to refresh the streams
-			# this will happen when the code starts up
-			api_response = call_api()
-			print(api_response)
-			the_ids = get_ids(api_response)
-			ids_size = len( the_ids)
-			print("new set of ids")
-			print(the_ids)
-			start_callapi = time.time()
+# # ================================================
+# # main loop
+# # ================================================
+# while True:
+# 	# everything in here will loop until told not to
+# 	try:
+# 		# when some timer is up startup another subprocess called process 2 and then kill the process1
+# 		if(time.time()-start>12.5):
+# 			if(id_val<0):
+# 				id_val=ids_size
+# 			else:
+# 				id_val = id_val - 1
+# 			# add a check here for unwanted titles
+# 			start_up_stream(the_ids, id_val)
+# 			time.sleep(5)
+# 			start_up_stream(the_ids,id_val)
+# 			print("the youtube link is; ", the_ids[id_val])
+# 			print("starting up the stream")
+# 			start = time.time()
 
-	except KeyboardInterrupt:
-		print('Interrupted')
-		try:
-			sys.exit(0)
-		except SystemExit:
-			os._exit(0)
+# 		if(time.time()-start_callapi>360):
+# 			# 360 is 6 minutes 6*60
+# 			# change this value to be how often you want to refresh the streams
+# 			# this will happen when the code starts up
+# 			api_response = call_api()
+# 			print(api_response)
+# 			the_ids = get_ids(api_response)
+# 			ids_size = len( the_ids)
+# 			print("new set of ids")
+# 			print(the_ids)
+# 			start_callapi = time.time()
+
+# 	except KeyboardInterrupt:
+# 		print('Interrupted')
+# 		try:
+# 			sys.exit(0)
+# 		except SystemExit:
+# 			os._exit(0)
 
