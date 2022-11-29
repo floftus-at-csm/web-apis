@@ -69,6 +69,7 @@ def get_video_list_before_year(key, term, date, maxVals=20, live=False, order_v 
         publishedBefore=date+'-01-01T00:00:00Z'
     )
     response = request.execute()
+    print("the response is: ", response)
     return response
 
 def get_title(id1, key):
@@ -206,21 +207,25 @@ def set_up_environment():
 # Main Loop
 if __name__ == "__main__":
     id_val = 0
-    # avoid_these = ["Meme", "meme", "MEME","Coffin","COFFIN", "Coffin", "Dance", "DANCE", "dance", "Cleanse", "CLEANSE", "cleanse", "Vibration", "VIBRATION", "vibration", "Sonic", "SONIC", "sonic", "Lightning", "LIGHTNING", "lightning", "McQueen","GTA", "gta", "Gta", "Minecraft", "MINECRAFT", "Memes", "MEMES", "memes", "Funny", "FUNNY", "funny", "Birds", "BIRDS", "birds", "TV", "tv", "Tv"]
-    # load_dotenv()
-    # DEVELOPER_KEY  = os.environ.get("YOUTUBE_DATA_API_KEY") # Define the API Key. This should be in a hidden file
     DEVELOPER_KEY = set_up_environment()
-    api_response = get_video_list(DEVELOPER_KEY, "another walk", False, "relevance") #final term could be rating, title, video count, date
-    print(api_response)
+    term = input("what search term would you like to use?")
+    year = input("Before which year?")
+    maximum = int(input("how many videos would you like to download?"))
+    output_location = input("what directory should you download the video to?")
+
+    # output_loc = input("where do you want to download the videos to?")
+    api_response = get_video_list_before_year(DEVELOPER_KEY, term, year, maximum) #final term could be rating, title, video count, date
+    print("/nThe API Response is: ", api_response)
 
     the_ids = get_ids(api_response)
     print("the ids are: ", the_ids)
 
-    print("the number of ids is: ", ids_size)
-    counter = 0
-    current_title = get_title(the_ids[id_val])
-    print("the current title is: ", current_title)
-
-    the_ids, id_size = remove_unwanted(current_title, the_ids, avoid_these)
+    download_videos_in_list(the_ids, output_location, max="100M")
 
 
+
+
+# e.g. python youtube_search_simple.py
+# funky odd dance
+# 10
+# content/intro/downloads/

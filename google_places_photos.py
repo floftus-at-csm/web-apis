@@ -95,7 +95,7 @@ if __name__ == "__main__":
     args=parser.parse_args()
 
     load_dotenv()
-    API_KEY = os.environ.get("GOOGLE_API_KEY") # Define the API Key. This should be in a hidden file
+    API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY") # Define the API Key. This should be in a hidden file
 
     # Define the Client
     gmaps = googlemaps.Client(key = API_KEY)
